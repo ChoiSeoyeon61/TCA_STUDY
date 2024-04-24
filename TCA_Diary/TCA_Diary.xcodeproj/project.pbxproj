@@ -20,6 +20,12 @@
 		43151C752BC533440093DA56 /* DiaryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43151C742BC533440093DA56 /* DiaryRow.swift */; };
 		43151C772BC5334D0093DA56 /* DiaryCreateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43151C762BC5334D0093DA56 /* DiaryCreateView.swift */; };
 		43151C7A2BC5339D0093DA56 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43151C792BC5339D0093DA56 /* DateExtension.swift */; };
+		433FA5952BD8E36F00DEBAB3 /* SupaClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433FA5942BD8E36F00DEBAB3 /* SupaClient.swift */; };
+		433FA5972BD8E38000DEBAB3 /* SupaConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433FA5962BD8E38000DEBAB3 /* SupaConfig.swift */; };
+		433FA5992BD8E38A00DEBAB3 /* ProjectDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433FA5982BD8E38A00DEBAB3 /* ProjectDto.swift */; };
+		433FA59B2BD8E39000DEBAB3 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433FA59A2BD8E39000DEBAB3 /* Project.swift */; };
+		433FA5A02BD8EA8900DEBAB3 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 433FA59F2BD8EA8900DEBAB3 /* Supabase */; };
+		433FA5A32BD8EB0E00DEBAB3 /* ProjectRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433FA5A22BD8EB0E00DEBAB3 /* ProjectRepo.swift */; };
 		438D0DA82BCFE397003B8BE8 /* DiaryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438D0DA72BCFE397003B8BE8 /* DiaryDetailView.swift */; };
 		438D0DAA2BCFEA9F003B8BE8 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438D0DA92BCFEA9F003B8BE8 /* ViewExtension.swift */; };
 		438D0DAD2BCFEAE7003B8BE8 /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438D0DAC2BCFEAE7003B8BE8 /* ViewModifiers.swift */; };
@@ -58,6 +64,11 @@
 		43151C742BC533440093DA56 /* DiaryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryRow.swift; sourceTree = "<group>"; };
 		43151C762BC5334D0093DA56 /* DiaryCreateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryCreateView.swift; sourceTree = "<group>"; };
 		43151C792BC5339D0093DA56 /* DateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtension.swift; sourceTree = "<group>"; };
+		433FA5942BD8E36F00DEBAB3 /* SupaClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupaClient.swift; sourceTree = "<group>"; };
+		433FA5962BD8E38000DEBAB3 /* SupaConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupaConfig.swift; sourceTree = "<group>"; };
+		433FA5982BD8E38A00DEBAB3 /* ProjectDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDto.swift; sourceTree = "<group>"; };
+		433FA59A2BD8E39000DEBAB3 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		433FA5A22BD8EB0E00DEBAB3 /* ProjectRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectRepo.swift; sourceTree = "<group>"; };
 		438D0DA72BCFE397003B8BE8 /* DiaryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryDetailView.swift; sourceTree = "<group>"; };
 		438D0DA92BCFEA9F003B8BE8 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		438D0DAC2BCFEAE7003B8BE8 /* ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
@@ -68,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				433FA5A02BD8EA8900DEBAB3 /* Supabase in Frameworks */,
 				43151C712BC52F2C0093DA56 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -96,6 +108,7 @@
 				43151C502BC52E490093DA56 /* TCA_DiaryTests */,
 				43151C5A2BC52E490093DA56 /* TCA_DiaryUITests */,
 				43151C3E2BC52E480093DA56 /* Products */,
+				433FA59E2BD8EA8900DEBAB3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -112,6 +125,7 @@
 		43151C3F2BC52E480093DA56 /* TCA_Diary */ = {
 			isa = PBXGroup;
 			children = (
+				433FA5922BD8E36200DEBAB3 /* Effect */,
 				43151C6A2BC52E820093DA56 /* Views */,
 				43151C6B2BC52E880093DA56 /* Reducers */,
 				43151C6C2BC52E8F0093DA56 /* Stores */,
@@ -185,6 +199,33 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		433FA5922BD8E36200DEBAB3 /* Effect */ = {
+			isa = PBXGroup;
+			children = (
+				433FA5932BD8E36800DEBAB3 /* Supabase */,
+			);
+			path = Effect;
+			sourceTree = "<group>";
+		};
+		433FA5932BD8E36800DEBAB3 /* Supabase */ = {
+			isa = PBXGroup;
+			children = (
+				433FA5942BD8E36F00DEBAB3 /* SupaClient.swift */,
+				433FA5962BD8E38000DEBAB3 /* SupaConfig.swift */,
+				433FA5982BD8E38A00DEBAB3 /* ProjectDto.swift */,
+				433FA59A2BD8E39000DEBAB3 /* Project.swift */,
+				433FA5A22BD8EB0E00DEBAB3 /* ProjectRepo.swift */,
+			);
+			path = Supabase;
+			sourceTree = "<group>";
+		};
+		433FA59E2BD8EA8900DEBAB3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		438D0DAB2BCFEAD6003B8BE8 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -211,6 +252,7 @@
 			name = TCA_Diary;
 			packageProductDependencies = (
 				43151C702BC52F2C0093DA56 /* ComposableArchitecture */,
+				433FA59F2BD8EA8900DEBAB3 /* Supabase */,
 			);
 			productName = TCA_Diary;
 			productReference = 43151C3D2BC52E480093DA56 /* TCA_Diary.app */;
@@ -286,6 +328,7 @@
 			mainGroup = 43151C342BC52E480093DA56;
 			packageReferences = (
 				43151C6F2BC52F2C0093DA56 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				433FA59D2BD8EA7100DEBAB3 /* XCRemoteSwiftPackageReference "supabase-swift" */,
 			);
 			productRefGroup = 43151C3E2BC52E480093DA56 /* Products */;
 			projectDirPath = "";
@@ -331,11 +374,16 @@
 			files = (
 				438D0DAA2BCFEA9F003B8BE8 /* ViewExtension.swift in Sources */,
 				43151C772BC5334D0093DA56 /* DiaryCreateView.swift in Sources */,
+				433FA5972BD8E38000DEBAB3 /* SupaConfig.swift in Sources */,
 				43151C7A2BC5339D0093DA56 /* DateExtension.swift in Sources */,
 				43151C432BC52E480093DA56 /* DiariesView.swift in Sources */,
+				433FA59B2BD8E39000DEBAB3 /* Project.swift in Sources */,
 				43151C732BC530DD0093DA56 /* Diaries.swift in Sources */,
+				433FA5952BD8E36F00DEBAB3 /* SupaClient.swift in Sources */,
 				43151C6E2BC52F0B0093DA56 /* Diary.swift in Sources */,
+				433FA5992BD8E38A00DEBAB3 /* ProjectDto.swift in Sources */,
 				43151C752BC533440093DA56 /* DiaryRow.swift in Sources */,
+				433FA5A32BD8EB0E00DEBAB3 /* ProjectRepo.swift in Sources */,
 				438D0DAD2BCFEAE7003B8BE8 /* ViewModifiers.swift in Sources */,
 				43151C412BC52E480093DA56 /* TCA_DiaryApp.swift in Sources */,
 				438D0DA82BCFE397003B8BE8 /* DiaryDetailView.swift in Sources */,
@@ -678,6 +726,14 @@
 				minimumVersion = 1.9.2;
 			};
 		};
+		433FA59D2BD8EA7100DEBAB3 /* XCRemoteSwiftPackageReference "supabase-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/supabase-community/supabase-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -685,6 +741,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 43151C6F2BC52F2C0093DA56 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
+		};
+		433FA59F2BD8EA8900DEBAB3 /* Supabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 433FA59D2BD8EA7100DEBAB3 /* XCRemoteSwiftPackageReference "supabase-swift" */;
+			productName = Supabase;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

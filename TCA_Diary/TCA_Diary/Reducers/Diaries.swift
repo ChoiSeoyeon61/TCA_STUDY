@@ -11,8 +11,11 @@ import ComposableArchitecture
 @Reducer
 struct Diaries {
 
+  let projectRepo = ProjectRepository() // 네트워킹 코드 어디에 둬야 함...?
+  
   struct State: Equatable {
     var diaries: IdentifiedArrayOf<Diary.State> = []
+    var project: Project? = nil
     @PresentationState var creatingDiary: CreatingDiary.State?
     @PresentationState var selectedDiary: Diary.State?
   }
@@ -22,6 +25,8 @@ struct Diaries {
     case diaries(IdentifiedActionOf<Diary>)
     case creatingDiary(PresentationAction<CreatingDiary.Action>)
     case selectedDiary(PresentationAction<Diary.Action>)
+    case getProject
+    case updateProject(Project?)
   }
   
   var body: some Reducer<State, Action> {
@@ -53,10 +58,25 @@ struct Diaries {
         state.diaries.append(newDiary)
         state.creatingDiary = nil
         return .none
-      
+        
       case .creatingDiary: // 전체를 다루는 case는 아래에 두기
         return .none
       case .selectedDiary:
+        return .none
+      case .getProject:
+        return .run { send in
+          let result = await projectRepo.getProject(email: "ssuk5@rmr.com")
+          switch result {
+          case .success(let data):
+            print(data)
+            await send(.updateProject(data.toModel()))
+          case .failure(let error):
+            print(error)
+            await send(.updateProject(nil))
+          }
+        }
+      case .updateProject(let project):
+        state.project = project
         return .none
       }
     }
