@@ -9,9 +9,9 @@ import Foundation
 import Supabase
 import PostgREST
 
-class SupaDiaryClient {
-  static let shared = SupabaseClient(supabaseURL: URL(string: SUPA_DIARY_URL)!,
-                                     supabaseKey: SUPA_DIARY_KEY)
+class SupaClient {
+  static let shared = SupabaseClient(supabaseURL: URL(string: SUPA_URL)!,
+                                     supabaseKey: SUPA_KEY)
   
   private init() {}
 }

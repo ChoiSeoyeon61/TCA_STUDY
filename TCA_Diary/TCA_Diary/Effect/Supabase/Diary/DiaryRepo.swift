@@ -22,14 +22,14 @@ struct DiaryRepo {
 extension DiaryRepo: DependencyKey {
   static let liveValue = Self(
     getDiaries: {
-      await SupaDiaryClient.shared
+      await SupaClient.shared
         .from("diary")
         .select()
         .getDatas(type: [DiaryDto].self)
     },
 
     getDiary: { id in
-      await SupaDiaryClient.shared
+      await SupaClient.shared
         .from("diary")
         .select()
         .eq("id", value: id)
@@ -39,7 +39,7 @@ extension DiaryRepo: DependencyKey {
 
     createDiary: { input in
       do {
-        return try await SupaDiaryClient.shared
+        return try await SupaClient.shared
           .from("diary")
           .insert(input, returning: .representation)
           .select()
@@ -52,7 +52,7 @@ extension DiaryRepo: DependencyKey {
 
     updateDiary: { input in
       do {
-        return try await SupaDiaryClient.shared
+        return try await SupaClient.shared
           .from("diary")
           .update(input, returning: .representation)
           .select()
