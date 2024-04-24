@@ -18,7 +18,7 @@ struct DiaryDetailView: View {
           .bold()
           .fontSize(20)
         
-        Text("최종 수정 일시: " + store.updatedAt.toString(.regularDate))
+        Text("생성일시: " + store.createdAt.toString(.regularDate))
           .fontSize(12)
           .foregroundColor(.gray.opacity(0.7))
       }

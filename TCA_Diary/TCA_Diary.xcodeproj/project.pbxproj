@@ -26,6 +26,8 @@
 		433FA59B2BD8E39000DEBAB3 /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433FA59A2BD8E39000DEBAB3 /* Project.swift */; };
 		433FA5A02BD8EA8900DEBAB3 /* Supabase in Frameworks */ = {isa = PBXBuildFile; productRef = 433FA59F2BD8EA8900DEBAB3 /* Supabase */; };
 		433FA5A32BD8EB0E00DEBAB3 /* ProjectRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433FA5A22BD8EB0E00DEBAB3 /* ProjectRepo.swift */; };
+		433FA5A92BD9110700DEBAB3 /* DiaryDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433FA5A82BD9110700DEBAB3 /* DiaryDto.swift */; };
+		433FA5AD2BD9110D00DEBAB3 /* DiaryRepo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 433FA5AC2BD9110D00DEBAB3 /* DiaryRepo.swift */; };
 		438D0DA82BCFE397003B8BE8 /* DiaryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438D0DA72BCFE397003B8BE8 /* DiaryDetailView.swift */; };
 		438D0DAA2BCFEA9F003B8BE8 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438D0DA92BCFEA9F003B8BE8 /* ViewExtension.swift */; };
 		438D0DAD2BCFEAE7003B8BE8 /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438D0DAC2BCFEAE7003B8BE8 /* ViewModifiers.swift */; };
@@ -69,6 +71,8 @@
 		433FA5982BD8E38A00DEBAB3 /* ProjectDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDto.swift; sourceTree = "<group>"; };
 		433FA59A2BD8E39000DEBAB3 /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		433FA5A22BD8EB0E00DEBAB3 /* ProjectRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectRepo.swift; sourceTree = "<group>"; };
+		433FA5A82BD9110700DEBAB3 /* DiaryDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryDto.swift; sourceTree = "<group>"; };
+		433FA5AC2BD9110D00DEBAB3 /* DiaryRepo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryRepo.swift; sourceTree = "<group>"; };
 		438D0DA72BCFE397003B8BE8 /* DiaryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryDetailView.swift; sourceTree = "<group>"; };
 		438D0DA92BCFEA9F003B8BE8 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		438D0DAC2BCFEAE7003B8BE8 /* ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
@@ -210,11 +214,9 @@
 		433FA5932BD8E36800DEBAB3 /* Supabase */ = {
 			isa = PBXGroup;
 			children = (
-				433FA5942BD8E36F00DEBAB3 /* SupaClient.swift */,
-				433FA5962BD8E38000DEBAB3 /* SupaConfig.swift */,
-				433FA5982BD8E38A00DEBAB3 /* ProjectDto.swift */,
-				433FA59A2BD8E39000DEBAB3 /* Project.swift */,
-				433FA5A22BD8EB0E00DEBAB3 /* ProjectRepo.swift */,
+				433FA5A42BD910A200DEBAB3 /* Base */,
+				433FA5A52BD910AF00DEBAB3 /* Project */,
+				433FA5A62BD910B900DEBAB3 /* Diary */,
 			);
 			path = Supabase;
 			sourceTree = "<group>";
@@ -224,6 +226,34 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		433FA5A42BD910A200DEBAB3 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				433FA5942BD8E36F00DEBAB3 /* SupaClient.swift */,
+				433FA5962BD8E38000DEBAB3 /* SupaConfig.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		433FA5A52BD910AF00DEBAB3 /* Project */ = {
+			isa = PBXGroup;
+			children = (
+				433FA5982BD8E38A00DEBAB3 /* ProjectDto.swift */,
+				433FA59A2BD8E39000DEBAB3 /* Project.swift */,
+				433FA5A22BD8EB0E00DEBAB3 /* ProjectRepo.swift */,
+			);
+			path = Project;
+			sourceTree = "<group>";
+		};
+		433FA5A62BD910B900DEBAB3 /* Diary */ = {
+			isa = PBXGroup;
+			children = (
+				433FA5A82BD9110700DEBAB3 /* DiaryDto.swift */,
+				433FA5AC2BD9110D00DEBAB3 /* DiaryRepo.swift */,
+			);
+			path = Diary;
 			sourceTree = "<group>";
 		};
 		438D0DAB2BCFEAD6003B8BE8 /* Utils */ = {
@@ -375,12 +405,14 @@
 				438D0DAA2BCFEA9F003B8BE8 /* ViewExtension.swift in Sources */,
 				43151C772BC5334D0093DA56 /* DiaryCreateView.swift in Sources */,
 				433FA5972BD8E38000DEBAB3 /* SupaConfig.swift in Sources */,
+				433FA5AD2BD9110D00DEBAB3 /* DiaryRepo.swift in Sources */,
 				43151C7A2BC5339D0093DA56 /* DateExtension.swift in Sources */,
 				43151C432BC52E480093DA56 /* DiariesView.swift in Sources */,
 				433FA59B2BD8E39000DEBAB3 /* Project.swift in Sources */,
 				43151C732BC530DD0093DA56 /* Diaries.swift in Sources */,
 				433FA5952BD8E36F00DEBAB3 /* SupaClient.swift in Sources */,
 				43151C6E2BC52F0B0093DA56 /* Diary.swift in Sources */,
+				433FA5A92BD9110700DEBAB3 /* DiaryDto.swift in Sources */,
 				433FA5992BD8E38A00DEBAB3 /* ProjectDto.swift in Sources */,
 				43151C752BC533440093DA56 /* DiaryRow.swift in Sources */,
 				433FA5A32BD8EB0E00DEBAB3 /* ProjectRepo.swift in Sources */,

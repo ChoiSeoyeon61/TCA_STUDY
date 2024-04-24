@@ -14,3 +14,10 @@ class SupaClient {
   
   private init() {}
 }
+
+class SupaDiaryClient {
+  static let shared = SupabaseClient(supabaseURL: URL(string: SUPA_URL)!,
+                                     supabaseKey: SUPA_KEY)
+  
+  private init() {}
+}

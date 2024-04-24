@@ -15,11 +15,11 @@ struct Diary {
   
   @ObservableState
   struct State: Equatable, Identifiable {
-    var id: UUID = UUID()
+    var id: Int
+    var title: String
+    var description: String
     var date: Date
-    var updatedAt: Date = Date()
-    var title: String = ""
-    var description: String = ""
+    var createdAt: Date
     
     var editMode: EditMode = .inactive
   }

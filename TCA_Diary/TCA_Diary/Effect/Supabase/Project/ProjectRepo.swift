@@ -11,13 +11,13 @@ import ComposableArchitecture
 
 
 @DependencyClient
-struct ProjectRepository {
+struct ProjectRepo {
   var getProject: (_ email: String) async -> Result<ProjectDto, DiaryError> = { _ in .failure(.error) }
   
   var createProject: (_ input: ProjectInput) async -> Result<ProjectDto, DiaryError> = { _ in .failure(.error) }
 }
 
-extension ProjectRepository: DependencyKey {
+extension ProjectRepo: DependencyKey {
   static let liveValue = Self(
     getProject: { email in
       return await SupaClient.shared
@@ -42,9 +42,9 @@ extension ProjectRepository: DependencyKey {
 }
 
 extension DependencyValues {
-  var projectRepository: ProjectRepository {
-    get { self[ProjectRepository.self] }
-    set { self[ProjectRepository.self] = newValue }
+  var projectRepo: ProjectRepo {
+    get { self[ProjectRepo.self] }
+    set { self[ProjectRepo.self] = newValue }
   }
 }
 

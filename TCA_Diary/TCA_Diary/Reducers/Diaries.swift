@@ -11,7 +11,7 @@ import ComposableArchitecture
 @Reducer
 struct Diaries {
 
-  @Dependency(\.projectRepository) var projectRepository
+  @Dependency(\.projectRepo) var projectRepo
   
   struct State: Equatable {
     var diaries: IdentifiedArrayOf<Diary.State> = []
@@ -46,17 +46,18 @@ struct Diaries {
         return .none
         
       case .creatingDiary(.presented(.submitDiary)): // 일부를 다루는 case를 위에 두어야 함
-        print(state.creatingDiary != nil)
-        guard let creatingDiary = state.creatingDiary
-        else { return .none }
-        let newDiary = Diary.State(
-          date: creatingDiary.date,
-          updatedAt: .now,
-          title: creatingDiary.title,
-          description: creatingDiary.description
-        )
-        state.diaries.append(newDiary)
-        state.creatingDiary = nil
+//        print(state.creatingDiary != nil)
+//        guard let creatingDiary = state.creatingDiary
+//        else { return .none }
+//        let newDiary = Diary.State(
+//
+//          id: creatingDiary.date,
+//          title: .now,
+//          description: creatingDiary.title,
+//          date: creatingDiary.description
+//        )
+//        state.diaries.append(newDiary)
+//        state.creatingDiary = nil
         return .none
         
       case .creatingDiary: // 전체를 다루는 case는 아래에 두기
@@ -65,7 +66,7 @@ struct Diaries {
         return .none
       case .getProject:
         return .run { send in
-          let result = await projectRepository.getProject(email: "ssuk5@rmr.com")
+          let result = await projectRepo.getProject(email: "ssuk5@rmr.com")
           switch result {
           case .success(let data):
             print(data)
