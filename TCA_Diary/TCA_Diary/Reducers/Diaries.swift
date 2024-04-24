@@ -11,11 +11,10 @@ import ComposableArchitecture
 @Reducer
 struct Diaries {
 
-  @Dependency(\.projectRepo) var projectRepo
+  @Dependency(\.diaryRepo) var diaryRepo
   
   struct State: Equatable {
     var diaries: IdentifiedArrayOf<Diary.State> = []
-    var project: Project? = nil
     @PresentationState var creatingDiary: CreatingDiary.State?
     @PresentationState var selectedDiary: Diary.State?
   }
@@ -25,8 +24,11 @@ struct Diaries {
     case diaries(IdentifiedActionOf<Diary>)
     case creatingDiary(PresentationAction<CreatingDiary.Action>)
     case selectedDiary(PresentationAction<Diary.Action>)
-    case getProject
-    case updateProject(Project?)
+    case refreshDiaries
+    case showCreateDiaryFailed
+    case getDiaries
+    case fetchDiaries(Result<[DiaryDto], DiaryError>)
+    case clearCreatingDiary
   }
   
   var body: some Reducer<State, Action> {
@@ -46,38 +48,49 @@ struct Diaries {
         return .none
         
       case .creatingDiary(.presented(.submitDiary)): // 일부를 다루는 case를 위에 두어야 함
-//        print(state.creatingDiary != nil)
-//        guard let creatingDiary = state.creatingDiary
-//        else { return .none }
-//        let newDiary = Diary.State(
-//
-//          id: creatingDiary.date,
-//          title: .now,
-//          description: creatingDiary.title,
-//          date: creatingDiary.description
-//        )
-//        state.diaries.append(newDiary)
-//        state.creatingDiary = nil
+        guard let creatingDiary = state.creatingDiary
+        else { return .none }
+        return .run { send in
+          let input = creatingDiary.toInput()
+          let result = await diaryRepo.createDiary(input: input)
+          switch result {
+          case .success(let data):
+            await send(.clearCreatingDiary)
+            await send(.refreshDiaries)
+          case .failure(let error):
+            await send(.clearCreatingDiary)
+            await send(.showCreateDiaryFailed)
+          }
+        }
+        
         return .none
         
       case .creatingDiary: // 전체를 다루는 case는 아래에 두기
         return .none
       case .selectedDiary:
         return .none
-      case .getProject:
+        
+      case .refreshDiaries:
+        return .none
+      case .showCreateDiaryFailed:
+        return .none
+      case .getDiaries:
         return .run { send in
-          let result = await projectRepo.getProject(email: "ssuk5@rmr.com")
-          switch result {
-          case .success(let data):
-            print(data)
-            await send(.updateProject(data.toModel()))
-          case .failure(let error):
-            print(error)
-            await send(.updateProject(nil))
-          }
+          let result = await diaryRepo.getDiaries()
+          await send(.fetchDiaries(result))
         }
-      case .updateProject(let project):
-        state.project = project
+      case .clearCreatingDiary:
+        state.creatingDiary = nil
+        return .none
+      case .fetchDiaries(let result):
+        switch result {
+        case .success(let data):
+          print(data)
+          let diaries = data.map { $0.toModel() }
+          state.diaries = .init(uniqueElements: diaries)
+        case .failure(let error):
+          print(error)
+        }
         return .none
       }
     }

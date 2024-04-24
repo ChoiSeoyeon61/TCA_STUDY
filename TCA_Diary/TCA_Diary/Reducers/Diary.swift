@@ -61,6 +61,10 @@ struct CreatingDiary {
     var date: Date
     var title: String = ""
     var description: String = ""
+    
+    func toInput() -> DiaryInput {
+      return DiaryInput(date: date, title: title, description: description)
+    }
   }
   
   enum Action: BindableAction, Sendable {

@@ -22,13 +22,9 @@ struct DiariesView: View {
           ForEachStore(self.store.scope(state: \.diaries, action: \.diaries)) { store in
             DiaryRow(store: store)
           }
-          
-          if let project = viewStore.project { // Q: Referencing subscript 'subscript(dynamicMember:)' on 'Store' requires that 'Diaries.State' conform to 'ObservableState' 때문에 viewStore 사용했는데, self.store랑 같이 혼재되는 이게 맞나... 싶고(그렇다고 @observableState 쓰면 presentationState를 사용할 수 없음..)
-            Text(project.name)
-          }
         }
         .onAppear {
-          store.send(.getProject)
+          store.send(.getDiaries)
         }
         .navigationDestination(
           store: store.scope(state: \.$creatingDiary, action: \.creatingDiary),
