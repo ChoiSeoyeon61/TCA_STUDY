@@ -1,34 +1,31 @@
 //
-//  Diary.swift
+//  CreatingDiary.swift
 //  TCA_Diary
 //
-//  Created by 최서연 on 4/9/24.
+//  Created by 최서연 on 4/24/24.
 //
 
 import Foundation
 import ComposableArchitecture
-import SwiftUI
 
 @Reducer
-struct Diary {
-  @Dependency(\.dismiss) var dismiss
+struct CreatingDiary {
   
   @ObservableState
   struct State: Equatable, Identifiable {
-    var id: Int
-    var title: String
-    var description: String
+    var id: UUID = UUID()
     var date: Date
-    var createdAt: Date
+    var title: String = ""
+    var description: String = ""
     
-    var editMode: EditMode = .inactive
+    func toInput() -> DiaryInput {
+      return DiaryInput(date: date, title: title, description: description)
+    }
   }
   
   enum Action: BindableAction, Sendable {
     case binding(BindingAction<State>)
     case submitDiary
-    case openDiary
-    case toggleEditMode
   }
   
   var body: some Reducer<State, Action> {
@@ -40,15 +37,8 @@ struct Diary {
         return .none
         
       case .submitDiary:
-        print(state)
-        
-        return .none
-      case .openDiary:
-        return .none
-      case .toggleEditMode:
         return .none
       }
     }
   }
 }
-
