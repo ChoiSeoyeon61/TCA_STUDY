@@ -29,6 +29,7 @@
 		438D0DAA2BCFEA9F003B8BE8 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438D0DA92BCFEA9F003B8BE8 /* ViewExtension.swift */; };
 		438D0DAD2BCFEAE7003B8BE8 /* ViewModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 438D0DAC2BCFEAE7003B8BE8 /* ViewModifiers.swift */; };
 		43AD25AB2BD91F390000831E /* CreatingDiary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AD25AA2BD91F390000831E /* CreatingDiary.swift */; };
+		43AD25AE2BD920AD0000831E /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 43AD25AD2BD920AD0000831E /* PhotoPicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,7 @@
 		438D0DA92BCFEA9F003B8BE8 /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		438D0DAC2BCFEAE7003B8BE8 /* ViewModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifiers.swift; sourceTree = "<group>"; };
 		43AD25AA2BD91F390000831E /* CreatingDiary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatingDiary.swift; sourceTree = "<group>"; };
+		43AD25AD2BD920AD0000831E /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,6 +167,7 @@
 		43151C6A2BC52E820093DA56 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				43AD25AC2BD920A40000831E /* Components */,
 				43151C402BC52E480093DA56 /* TCA_DiaryApp.swift */,
 				43151C422BC52E480093DA56 /* DiariesView.swift */,
 				43151C742BC533440093DA56 /* DiaryRow.swift */,
@@ -248,6 +251,14 @@
 				438D0DAC2BCFEAE7003B8BE8 /* ViewModifiers.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		43AD25AC2BD920A40000831E /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				43AD25AD2BD920AD0000831E /* PhotoPicker.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -401,6 +412,7 @@
 				433FA5A92BD9110700DEBAB3 /* DiaryDto.swift in Sources */,
 				43151C752BC533440093DA56 /* DiaryRow.swift in Sources */,
 				438D0DAD2BCFEAE7003B8BE8 /* ViewModifiers.swift in Sources */,
+				43AD25AE2BD920AD0000831E /* PhotoPicker.swift in Sources */,
 				43151C412BC52E480093DA56 /* TCA_DiaryApp.swift in Sources */,
 				438D0DA82BCFE397003B8BE8 /* DiaryDetailView.swift in Sources */,
 			);

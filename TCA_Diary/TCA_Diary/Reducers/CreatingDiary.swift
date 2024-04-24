@@ -7,6 +7,7 @@
 
 import Foundation
 import ComposableArchitecture
+import UIKit
 
 @Reducer
 struct CreatingDiary {
@@ -17,6 +18,9 @@ struct CreatingDiary {
     var date: Date
     var title: String = ""
     var description: String = ""
+    var image: UIImage?
+    
+    var isImagePickerPresented = false
     
     func toInput() -> DiaryInput {
       return DiaryInput(date: date, title: title, description: description)
@@ -25,6 +29,7 @@ struct CreatingDiary {
   
   enum Action: BindableAction, Sendable {
     case binding(BindingAction<State>)
+    case openPhotoPicker
     case submitDiary
   }
   
@@ -36,6 +41,9 @@ struct CreatingDiary {
       case .binding:
         return .none
         
+      case .openPhotoPicker:
+        state.isImagePickerPresented = true
+        return .none
       case .submitDiary:
         return .none
       }

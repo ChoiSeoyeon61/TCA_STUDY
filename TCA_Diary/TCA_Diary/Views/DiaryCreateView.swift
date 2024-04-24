@@ -12,23 +12,44 @@ import SwiftUI
 struct DiaryCreateView: View {
   @Bindable var store: StoreOf<CreatingDiary>
   
-  // presentation back(environment): presentationMode
-  // 그 외는 안 넣으신다고 함
-  // 써보는 연습?
-  
   var body: some View {
-    VStack(alignment: .leading) {
+    ScrollView {
+      VStack(alignment: .leading) {
+        datePicker()
+          
+        titleField()
       
-      DatePicker("날짜", selection: $store.date)
-        .padding(.bottom, 20)
+        descEditor()
         
-      
-      HStack(spacing: 30) {
-        Text("제목")
-        TextField("제목을 입력하세요.", text: $store.title)
+        photoAttachment()
+        
+        submitButton()
       }
+    }
+    .sheet(isPresented: $store.isImagePickerPresented) {
+      PhotoPicker(selectedImage: $store.image, sourceType: .photoLibrary)
+    }
+    .navigationTitle("일기 작성하기")
+    .padding(24)
+    .multilineTextAlignment(.leading)
+    .interactiveDismissDisabled()
+  }
+  
+  private func datePicker() -> some View {
+    DatePicker("날짜", selection: $store.date)
       .padding(.bottom, 20)
-      
+  }
+  
+  private func titleField() -> some View {
+    HStack(spacing: 30) {
+      Text("제목")
+      TextField("제목을 입력하세요.", text: $store.title)
+    }
+    .padding(.bottom, 20)
+  }
+  
+  private func descEditor() -> some View {
+    VStack(alignment: .leading, spacing: 8) {
       Text("내용")
       
       TextEditor(text: $store.description)
@@ -37,17 +58,30 @@ struct DiaryCreateView: View {
             .stroke(.gray.opacity(0.5))
         )
         .frame(height: 200)
-      
-      Spacer()
-      
-      Button("제출") {
-        store.send(.submitDiary)
+        .padding(.bottom, 40)
+    }
+  }
+  
+  private func photoAttachment() -> some View {
+    VStack {
+      if let image = store.image {
+        Image(uiImage: image)
+          .resizable()
+          .scaledToFill()
+          .frame(width: 300, height: 150)
+          .clipped()
+      } else {
+        Button("사진 첨부하기") {
+          store.send(.openPhotoPicker)
+        }
       }
     }
-    .navigationTitle("일기 작성하기")
-    .padding(24)
-    .multilineTextAlignment(.leading)
-    .interactiveDismissDisabled()
-    
+  }
+  
+  private func submitButton() -> some View {
+    Button("제출") {
+      store.send(.submitDiary)
+    }
+    .padding(8, 0, 0, 8)
   }
 }
