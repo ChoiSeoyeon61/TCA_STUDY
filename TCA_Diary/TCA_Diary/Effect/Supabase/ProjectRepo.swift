@@ -7,16 +7,44 @@
 
 import Foundation
 import PostgREST
+import ComposableArchitecture
 
-class ProjectRepository {
-  @MainActor
-  func getProject(email: String) async -> Result<ProjectDto, DiaryError> {
-    return await SupaClient.shared.database
-      .from("project")
-      .select()
-      .eq("userEmail", value: email)
-      .single()
-      .getDatas(type: ProjectDto.self)
+
+@DependencyClient
+struct ProjectRepository {
+  var getProject: (_ email: String) async -> Result<ProjectDto, DiaryError> = { _ in .failure(.error) }
+  
+  var createProject: (_ input: ProjectInput) async -> Result<ProjectDto, DiaryError> = { _ in .failure(.error) }
+}
+
+extension ProjectRepository: DependencyKey {
+  static let liveValue = Self(
+    getProject: { email in
+      return await SupaClient.shared
+        .from("project")
+        .select()
+        .eq("userEmail", value: email)
+        .single()
+        .getDatas(type: ProjectDto.self)
+    },
+    
+    createProject: { input in
+      do {
+        return try await SupaClient.shared
+          .from("project")
+          .insert(input, returning: .representation)
+          .single()
+          .getDatas(type: ProjectDto.self)
+      } catch {
+        return .failure(.supaError(error))
+      }
+    })
+}
+
+extension DependencyValues {
+  var projectRepository: ProjectRepository {
+    get { self[ProjectRepository.self] }
+    set { self[ProjectRepository.self] = newValue }
   }
 }
 
@@ -37,4 +65,5 @@ extension PostgrestBuilder {
 
 enum DiaryError: Error {
   case error
+  case supaError(Error)
 }

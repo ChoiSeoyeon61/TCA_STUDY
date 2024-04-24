@@ -17,7 +17,7 @@ struct ProjectDto: Decodable {
   let companyId: Int?
   
   func toModel() -> Project {
-    return Project(serverId: id ?? "",
+    return Project(serverId: id ?? -1,
                    userEmail: userEmail ?? "",
                    password: password ?? "",
                    name: name ?? "",

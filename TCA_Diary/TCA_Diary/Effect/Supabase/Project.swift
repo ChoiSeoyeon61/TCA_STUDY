@@ -7,8 +7,17 @@
 
 import Foundation
 
-struct Project {
+struct Project: Equatable {
   let serverId: Int
+  let userEmail: String
+  let password: String
+  let name: String
+  let area: String
+  let client: String
+  let companyId: Int?
+}
+
+struct ProjectInput: Equatable, Encodable {
   let userEmail: String
   let password: String
   let name: String

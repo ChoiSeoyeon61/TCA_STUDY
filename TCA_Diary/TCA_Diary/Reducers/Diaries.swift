@@ -11,7 +11,7 @@ import ComposableArchitecture
 @Reducer
 struct Diaries {
 
-  let projectRepo = ProjectRepository() // 네트워킹 코드 어디에 둬야 함...?
+  @Dependency(\.projectRepository) var projectRepository
   
   struct State: Equatable {
     var diaries: IdentifiedArrayOf<Diary.State> = []
@@ -65,7 +65,7 @@ struct Diaries {
         return .none
       case .getProject:
         return .run { send in
-          let result = await projectRepo.getProject(email: "ssuk5@rmr.com")
+          let result = await projectRepository.getProject(email: "ssuk5@rmr.com")
           switch result {
           case .success(let data):
             print(data)
