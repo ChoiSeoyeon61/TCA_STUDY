@@ -26,9 +26,6 @@ struct DiaryCreateView: View {
         submitButton()
       }
     }
-    .sheet(isPresented: $store.isImagePickerPresented) {
-      PhotoPicker(selectedImage: $store.image, sourceType: .photoLibrary)
-    }
     .navigationTitle("일기 작성하기")
     .padding(24)
     .multilineTextAlignment(.leading)

@@ -11,6 +11,7 @@ import UIKit
 
 @Reducer
 struct CreatingDiary {
+  @Dependency(\.photoPicker) var photoPicker
   
   @ObservableState
   struct State: Equatable, Identifiable {
@@ -20,8 +21,6 @@ struct CreatingDiary {
     var description: String = ""
     var image: UIImage?
     
-    var isImagePickerPresented = false
-    
     func toInput() -> DiaryInput {
       return DiaryInput(date: date, title: title, description: description)
     }
@@ -30,6 +29,7 @@ struct CreatingDiary {
   enum Action: BindableAction, Sendable {
     case binding(BindingAction<State>)
     case openPhotoPicker
+    case selectImage(UIImage?)
     case submitDiary
   }
   
@@ -42,9 +42,20 @@ struct CreatingDiary {
         return .none
         
       case .openPhotoPicker:
-        state.isImagePickerPresented = true
-        return .none
+        
+        return .run { send in
+          do {
+            let image = try await photoPicker.present()
+            print(image)
+            await send(.selectImage(image))
+          } catch {
+            print(error)
+          }
+        }
       case .submitDiary:
+        return .none
+      case .selectImage(let image):
+        state.image = image
         return .none
       }
     }
