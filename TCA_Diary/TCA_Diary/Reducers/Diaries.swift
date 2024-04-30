@@ -11,64 +11,76 @@ import ComposableArchitecture
 @Reducer
 struct Diaries {
 
+  @Reducer(state: .equatable)
+  enum Destination {
+    case creating(CreatingDiary)
+    case select(Diary)
+  }
+  
   @Dependency(\.diaryRepo) var diaryRepo
   
+  @ObservableState
   struct State: Equatable {
     var diaries: IdentifiedArrayOf<Diary.State> = []
-    @PresentationState var creatingDiary: CreatingDiary.State?
-    @PresentationState var selectedDiary: Diary.State?
+    var destination = StackState<Destination.State>()
   }
   
   enum Action: Sendable {
     case createDiaryButtonTapped
     case diaries(IdentifiedActionOf<Diary>)
-    case creatingDiary(PresentationAction<CreatingDiary.Action>)
-    case selectedDiary(PresentationAction<Diary.Action>)
+    case destination(StackAction<Destination.State, Destination.Action>)
     case refreshDiaries
     case showCreateDiaryFailed
     case getDiaries
     case fetchDiaries(Result<[DiaryDto], DiaryError>)
     case clearCreatingDiary
+    case openDiary(Diary.State)
   }
   
   var body: some Reducer<State, Action> {
     Reduce { state, action in
       switch action {
       case .createDiaryButtonTapped:
-        state.creatingDiary = CreatingDiary.State(date: .now)
+        state.destination = .creating(CreatingDiary.State(date: .now))
         return .none
         
       case let .diaries(.element(id: id, action: .openDiary)):
-        let selectedDiary = state.diaries.filter { $0.id == id }.first
-        print(selectedDiary)
-        state.selectedDiary = selectedDiary
+        guard let selectedDiary = state.diaries.filter({ $0.id == id }).first else {
+          return .none
+        }
+        
+        return .run { send in
+          await send(.openDiary(selectedDiary))
+        }
+        
+      case .openDiary(let diary):
+        state.destination = .select(diary)
         return .none
         
       case .diaries:
         return .none
         
-      case .creatingDiary(.presented(.submitDiary)): // 일부를 다루는 case를 위에 두어야 함
-        guard let creatingDiary = state.creatingDiary
-        else { return .none }
-        return .run { send in
-          let input = creatingDiary.toInput()
-          let result = await diaryRepo.createDiary(input: input)
-          switch result {
-          case .success(let data):
-            await send(.clearCreatingDiary)
-            await send(.refreshDiaries)
-          case .failure(let error):
-            await send(.clearCreatingDiary)
-            await send(.showCreateDiaryFailed)
+      case .destination(.presented(.creating(.submitDiary))): // 일부를 다루는 case를 위에 두어야 함
+        switch state.destination {
+        case let .creating(creatingDiary):
+          return .run { send in
+            let input = creatingDiary.toInput()
+            let result = await diaryRepo.createDiary(input: input)
+            switch result {
+            case .success(let data):
+              await send(.clearCreatingDiary)
+              await send(.refreshDiaries)
+              let diary = data.toModel()
+              await send(.openDiary(diary))
+            case .failure(let error):
+              await send(.clearCreatingDiary)
+              await send(.showCreateDiaryFailed)
+            }
           }
+        default:
+          return .none
         }
         
-        return .none
-        
-      case .creatingDiary: // 전체를 다루는 case는 아래에 두기
-        return .none
-      case .selectedDiary:
-        return .none
         
       case .refreshDiaries:
         return .none
@@ -80,7 +92,7 @@ struct Diaries {
           await send(.fetchDiaries(result))
         }
       case .clearCreatingDiary:
-        state.creatingDiary = nil
+        state.destination.pop
         return .none
       case .fetchDiaries(let result):
         switch result {
@@ -92,16 +104,15 @@ struct Diaries {
           print(error)
         }
         return .none
+      case .destination:
+        return .none
       }
     }
     .forEach(\.diaries, action: \.diaries) {
       Diary()
     }
-    .ifLet(\.$creatingDiary, action: \.creatingDiary) {
-      CreatingDiary()
-    }
-    .ifLet(\.$selectedDiary, action: \.selectedDiary) {
-      Diary()
-    }
+    .forEach(\.destination, action: \.destination)
   }
+  
+  
 }

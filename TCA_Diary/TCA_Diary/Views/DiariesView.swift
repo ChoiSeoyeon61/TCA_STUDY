@@ -13,7 +13,7 @@ struct DiariesView: View {
 
   var body: some View {
     WithViewStore(store, observe: { $0 }) { viewStore in
-      NavigationStack {
+      NavigationStack(path: $store.scope(state: \.destination, action: \.destination)) {
         List {
           Button("일기 추가하기") {
             store.send(.createDiaryButtonTapped)
@@ -26,14 +26,13 @@ struct DiariesView: View {
         .onAppear {
           store.send(.getDiaries)
         }
-        .navigationDestination(
-          store: store.scope(state: \.$creatingDiary, action: \.creatingDiary),
-          destination: DiaryCreateView.init
-        )
-        .navigationDestination(
-          store: store.scope(state: \.$selectedDiary, action: \.selectedDiary),
-          destination: DiaryDetailView.init
-        )
+      } destination: { store in
+        switch store.case {
+        case let .select(store):
+          DiaryDetailView(store: store)
+        case let .creating(store):
+          DiaryCreateView(store: store)
+        }
       }
     }
   }
