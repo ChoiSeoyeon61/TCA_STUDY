@@ -22,6 +22,15 @@ extension DependencyValues {
   }
 }
 
+class VC {
+  @MainActor
+  
+  static func getUIImagePickerController() -> UIImagePickerController {
+    let vc = UIImagePickerController()
+    vc.allowsEditing = false
+    return vc
+  }
+}
 
 extension PhotoLibraryClient: DependencyKey {
   static let liveValue = {
@@ -33,8 +42,8 @@ extension PhotoLibraryClient: DependencyKey {
   }()
   
   actor Presenter {
+    
     var viewController: UIImagePickerController?
-//    private let sourceType: UIImagePickerController.SourceType
     
     func present() async throws -> UIImage? {
       final class Delegate: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -60,10 +69,7 @@ extension PhotoLibraryClient: DependencyKey {
       
       await self.dismiss()
       
-      let viewController = await UIImagePickerController()
-//      viewController.allowsEditing = false
-//      viewController.sourceType = sourceType
-      
+      let viewController = await VC.getUIImagePickerController()
       self.viewController = viewController
       return try await AsyncThrowingStream<UIImage, Error> { continuation in
         Task {
