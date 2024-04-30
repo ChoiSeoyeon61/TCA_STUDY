@@ -10,25 +10,18 @@ import ComposableArchitecture
 
 @Reducer
 struct Diaries {
-
-  @Reducer(state: .equatable)
-  enum Destination {
-    case creating(CreatingDiary)
-    case select(Diary)
-  }
   
   @Dependency(\.diaryRepo) var diaryRepo
   
   @ObservableState
   struct State: Equatable {
     var diaries: IdentifiedArrayOf<Diary.State> = []
-    var destination = StackState<Destination.State>()
   }
   
   enum Action: Sendable {
     case createDiaryButtonTapped
     case diaries(IdentifiedActionOf<Diary>)
-    case destination(StackAction<Destination.State, Destination.Action>)
+
     case refreshDiaries
     case showCreateDiaryFailed
     case getDiaries
@@ -111,7 +104,6 @@ struct Diaries {
     .forEach(\.diaries, action: \.diaries) {
       Diary()
     }
-    .forEach(\.destination, action: \.destination)
   }
   
   

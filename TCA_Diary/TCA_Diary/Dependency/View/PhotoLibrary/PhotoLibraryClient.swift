@@ -24,7 +24,6 @@ extension DependencyValues {
 
 class VC {
   @MainActor
-  
   static func getUIImagePickerController() -> UIImagePickerController {
     let vc = UIImagePickerController()
     vc.allowsEditing = false
